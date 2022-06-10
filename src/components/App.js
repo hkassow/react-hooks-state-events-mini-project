@@ -1,19 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import CategoryFilter from "./CategoryFilter";
 import NewTaskForm from "./NewTaskForm";
 import TaskList from "./TaskList";
 
 import { CATEGORIES, TASKS } from "../data";
-console.log("Here's the data you're working with");
-console.log({ CATEGORIES, TASKS });
 
 function App() {
+  const [filter, setFilter] = useState('')
+  const catSetFilter = (cat) => {
+    setFilter(cat)
+  }
+  const [tasks, setTASKS] = useState(TASKS)
+  const onTaskFormSubmit = (task) => {
+    setTASKS([...tasks, task])
+  }
   return (
     <div className="App">
       <h2>My tasks</h2>
-      <CategoryFilter />
-      <NewTaskForm />
-      <TaskList />
+      <CategoryFilter CATEGORIES = {CATEGORIES} catSetFilter = {catSetFilter}/>
+      <NewTaskForm CATEGORIES = {CATEGORIES} onTaskFormSubmit = {onTaskFormSubmit}/>
+      <TaskList TASKS={tasks} filter = {filter}/>
     </div>
   );
 }
